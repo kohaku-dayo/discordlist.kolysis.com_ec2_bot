@@ -1,0 +1,1 @@
+base_url = "https://nfvdoa532a.execute-api.ap-northeast-1.amazonaws.com/InitialStage";
