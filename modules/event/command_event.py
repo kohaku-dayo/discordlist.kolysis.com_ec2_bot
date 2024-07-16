@@ -43,7 +43,7 @@ async def create_server_invite(inter:discord.Interaction):
         )
 
 
-    invite:discord.Invite = await inter.channel.create_invite(
+    invite:discord.Invite = await inter.followup.channel.create_invite(
         reason="dislist invitation created."
         )
 
