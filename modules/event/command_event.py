@@ -7,9 +7,8 @@ from ..func.exception_func import exception_process
 from ..env import base_url
 
 async def send_help(inter:discord.Interaction):
-    await inter.response.defer()
     print("[send_help] detected...")
-    await inter.followup.send("this feature is currently on development")
+    await inter.response.send_message("this feature is currently on development")
     pass
 
 async def update_server_order(inter:discord.Interaction):
@@ -22,15 +21,14 @@ async def update_server_order(inter:discord.Interaction):
     await exception_process(
         updateServerOrderResponse,
         "update server order process successed.",
-        "update server order process failed.",
-        inter.followup
+        "update server order process failed."
         )
+    await inter.followup.send("表示順の更新完了！")
     
 async def create_server_invite(inter:discord.Interaction):
     await inter.response.defer()
-    followup:discord.Webhook = inter.followup
     if inter.guild_id is None:
-        await inter.followup.send("this command is not allowed to use in DM")
+        await inter.response.send_message("this command is not allowed to use in DM")
         return
     
     vcMemberCounts = 0
@@ -44,7 +42,7 @@ async def create_server_invite(inter:discord.Interaction):
         )
 
 
-    invite:discord.Invite = await followup.channel.create_invite(
+    invite:discord.Invite = await inter.channel.create_invite(
         reason="dislist invitation created."
         )
 
@@ -56,12 +54,13 @@ async def create_server_invite(inter:discord.Interaction):
     await exception_process(
         updateServerCurrentActiveUsersResponse,
         "update server current active users number process successed.",
-        "update server current active users number failed.",
-        followup
+        "update server current active users number failed."
         )
+    
     await exception_process(
         inviteURLUpdateResponse,
         "update server process successed.",
-        "update server process failed.",
-        followup
+        "update server process failed."
         )
+    
+    await inter.followup.send("招待リンクの作成に成功しました！")

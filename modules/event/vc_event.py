@@ -43,8 +43,6 @@ async def post_vc_log(member: discord.Member):
     
 async def incrementCurrentActiveUsers(member: discord.Member):
     incrementCurrentActiveUsersResponse = requests.patch(f'{base_url}/server/{member.guild.id}/current_active_users/increment')
-    #########作業予定#########
-    #### exception_processを挟んで、decrementが実装できない理由を探す。
     await exception_process(
         incrementCurrentActiveUsersResponse,
         "increment current active users succeed",
