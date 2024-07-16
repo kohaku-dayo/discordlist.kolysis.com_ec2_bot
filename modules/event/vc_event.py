@@ -9,7 +9,7 @@ memberVCLog:dict = {}
 
 async def on_vc_join(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
     create_tmp_vc_log(member)
-    incrementCurrentActiveUsers(member)
+    await incrementCurrentActiveUsers(member)
 
 async def on_vc_change(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
     await post_vc_log(member)
@@ -17,9 +17,9 @@ async def on_vc_change(member:discord.Member, before:discord.VoiceState, after:d
 
 async def on_vc_leave(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
     await post_vc_log(member)
-    decrementCurrentActiveUsers(member)
+    await decrementCurrentActiveUsers(member)
 
-def create_tmp_vc_log(member):
+def create_tmp_vc_log(member: discord.Member):
     global memberVCLog
     memberVCLog[member.id] = int(time.time())    
 
@@ -41,9 +41,21 @@ async def post_vc_log(member: discord.Member):
         )
     del memberVCLog[member.id]
     
-def incrementCurrentActiveUsers(member: discord.Member):
-    requests.patch(f'{base_url}/server/{member.guild.id}/current_active_users/increment')
+async def incrementCurrentActiveUsers(member: discord.Member):
+    incrementCurrentActiveUsersResponse = requests.patch(f'{base_url}/server/{member.guild.id}/current_active_users/increment')
+    #########作業予定#########
+    #### exception_processを挟んで、decrementが実装できない理由を探す。
+    await exception_process(
+        incrementCurrentActiveUsersResponse,
+        "increment current active users succeed",
+        "increment current active users failed"
+        )
 
-def decrementCurrentActiveUsers(member: discord.Member):
-    requests.patch(f'{base_url}/server/{member.guild.id}/current_active_users/decrement')
+async def decrementCurrentActiveUsers(member: discord.Member):
+    decrementCurrentActiveUsersResponse = requests.patch(f'{base_url}/server/{member.guild.id}/current_active_users/decrement')
     
+    await exception_process(
+        decrementCurrentActiveUsersResponse,
+        "decrement current active users succeed",
+        "decrement current active users failed"
+        )

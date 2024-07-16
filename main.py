@@ -4,7 +4,6 @@ from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
 import os
-
 from modules.event.command_event import send_help, update_server_order, create_server_invite
 from modules.event.vc_event import on_vc_join, on_vc_leave, on_vc_change
 
