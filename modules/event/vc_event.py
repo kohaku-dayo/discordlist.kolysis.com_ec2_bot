@@ -25,6 +25,8 @@ def create_tmp_vc_log(member: discord.Member):
 
 async def post_vc_log(member: discord.Member):
     global memberVCLog
+    if member.id not in memberVCLog:
+        return
     createVCLogRequest = requests.post(
         f'{base_url}/vc_log',
         data = json.dumps({
