@@ -7,13 +7,13 @@ from ..func.exception_func import exception_process
 from ..env import base_url
 
 async def send_help(inter:discord.Interaction):
-    await inter.response.defer();
+    await inter.response.defer()
     print("[send_help] detected...")
     await inter.followup.send("this feature is currently on development")
     pass
 
 async def update_server_order(inter:discord.Interaction):
-    await inter.response.defer();
+    await inter.response.defer()
     updateServerOrderResponse = requests.patch(
         f'{base_url}/server/{inter.guild.id}/updated_log',
         data = json.dumps({"updated_epoch": f'{int(time.time())}'})
@@ -27,7 +27,7 @@ async def update_server_order(inter:discord.Interaction):
         )
     
 async def create_server_invite(inter:discord.Interaction):
-    await inter.response.defer();
+    await inter.response.defer()
     if inter.guild_id is None:
         await inter.followup.send("this command is not allowed to use in DM")
         return
