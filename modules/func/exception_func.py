@@ -1,5 +1,5 @@
 import discord
-sendLog = False
+sendLog = True
 
 async def exception_process(response, succeedMessage:str, failedMessage:str):
     global sendLog
