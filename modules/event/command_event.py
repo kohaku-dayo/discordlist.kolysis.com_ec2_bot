@@ -28,6 +28,7 @@ async def update_server_order(inter:discord.Interaction):
     
 async def create_server_invite(inter:discord.Interaction):
     await inter.response.defer()
+    followup:discord.Webhook = inter.followup
     if inter.guild_id is None:
         await inter.followup.send("this command is not allowed to use in DM")
         return
@@ -43,7 +44,7 @@ async def create_server_invite(inter:discord.Interaction):
         )
 
 
-    invite:discord.Invite = await inter.followup.channel.create_invite(
+    invite:discord.Invite = await followup.channel.create_invite(
         reason="dislist invitation created."
         )
 
@@ -56,11 +57,11 @@ async def create_server_invite(inter:discord.Interaction):
         updateServerCurrentActiveUsersResponse,
         "update server current active users number process successed.",
         "update server current active users number failed.",
-        inter.followup
+        followup
         )
     await exception_process(
         inviteURLUpdateResponse,
         "update server process successed.",
         "update server process failed.",
-        inter.followup
+        followup
         )
