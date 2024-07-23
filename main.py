@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 from modules.event.command_event import send_help, update_server_order, create_server_invite
 from modules.event.vc_event import on_vc_join, on_vc_leave, on_vc_change
+from modules.event.guild_event import on_guild_join
 
 # env読み込み
 load_dotenv()
@@ -15,6 +16,7 @@ intents:discord.Intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 intents.voice_states = True
+intents.guilds = True
 client:discord.Client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
@@ -26,6 +28,10 @@ async def on_ready():
 @client.event
 async def on_connect():
     print('on_connect.......')
+    
+@client.event
+async def on_guild_join(guild:discord.Guild):
+    await on_guild_join(guild)
 
 @tree.command(name="help", description="サーバー表示順を更新します")
 @app_commands.default_permissions(administrator=True)
