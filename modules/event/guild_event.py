@@ -3,7 +3,8 @@ import requests
 import json
 from ..env import base_url
 from ..func.exception_func import exception_process
-async def on_guild_join(guild:discord.Guild):
+
+async def create_server(guild:discord.Guild):
     createServerRequest = requests.post(
         f'{base_url}/server',
         data = json.dumps({

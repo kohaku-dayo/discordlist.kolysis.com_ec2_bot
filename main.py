@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import os
 from modules.event.command_event import send_help, update_server_order, create_server_invite
 from modules.event.vc_event import on_vc_join, on_vc_leave, on_vc_change
-from modules.event.guild_event import on_guild_join
+from modules.event.guild_event import create_server
 
 # env読み込み
 load_dotenv()
@@ -31,7 +31,7 @@ async def on_connect():
     
 @client.event
 async def on_guild_join(guild:discord.Guild):
-    await on_guild_join(guild)
+    await create_server(guild)
 
 @tree.command(name="help", description="サーバー表示順を更新します")
 @app_commands.default_permissions(administrator=True)
