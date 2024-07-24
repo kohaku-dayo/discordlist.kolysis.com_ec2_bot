@@ -10,7 +10,7 @@ async def create_server(guild:discord.Guild):
         data = json.dumps({
             "id": f'{guild.id}',
             "name": f'{guild.name}',
-            "icon": f'`{guild.icon}'
+            "icon": f'`{guild.icon.key if guild.icon else None}'
             })
         );
 
