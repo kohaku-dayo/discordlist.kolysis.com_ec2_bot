@@ -9,7 +9,8 @@ async def create_server(guild:discord.Guild):
         f'{base_url}/server',
         data = json.dumps({
             "id": f'{guild.id}',
-            "name": f'{guild.name}'
+            "name": f'{guild.name}',
+            "icon": f'`{guild.icon}'
             })
         );
 
