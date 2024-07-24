@@ -37,7 +37,7 @@ async def on_guild_join(guild:discord.Guild):
 @tree.command(name="test", description="test")
 @app_commands.default_permissions(administrator=True)
 async def up(inter:discord.Interaction):
-    print(inter.guild.icon.key)
+    print(inter.guild.icon)
 
 @tree.command(name="help", description="サーバー表示順を更新します")
 @app_commands.default_permissions(administrator=True)
