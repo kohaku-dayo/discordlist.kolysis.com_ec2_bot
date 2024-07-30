@@ -19,3 +19,20 @@ async def create_server(guild:discord.Guild):
         "create server process succeed.",
         "create server process failed."
         )
+    
+async def update_server_icon(guild:discord.Guild):
+    requests.patch(
+        f'{base_url}/server/{guild.id}',
+        data = json.dumps({
+            "icon": f'{guild.icon.key if guild.icon else None}'
+            })
+        );
+
+async def update_server_name(guild:discord.Guild):
+    requests.patch(
+        f'{base_url}/server/{guild.id}',
+        data = json.dumps({
+            "name": f'{guild.name}',
+            })
+        );
+
