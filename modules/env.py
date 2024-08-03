@@ -1,1 +1,1 @@
-base_url = "https://nfvdoa532a.execute-api.ap-northeast-1.amazonaws.com/InitialStage";
+base_url = "https://tubh2c5yw6.execute-api.ap-northeast-1.amazonaws.com/InitialStage";
