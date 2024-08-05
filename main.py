@@ -34,7 +34,7 @@ async def on_guild_join(guild:discord.Guild):
     await join_server(guild)
 
 @client.event
-async def on_guild_leave(guild:discord.Guild):
+async def on_guild_remove(guild:discord.Guild):
     await leave_server(guild)
     
 @client.event

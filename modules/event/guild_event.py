@@ -24,8 +24,8 @@ async def leave_server(guild:discord.Guild):
 
     await exception_process(
         leaveServerRequest,
-        "join server process succeed.",
-        "join server process failed."
+        "leave server process succeed.",
+        "leave server process failed."
         )
 
 async def update_server_icon(guild:discord.Guild):
