@@ -27,6 +27,10 @@ async def post_vc_log(member: discord.Member):
     global memberVCLog
     if member.id not in memberVCLog:
         return
+    # 10•ª–¢–‚ÌƒƒO‚Ípost‚µ‚È‚¢‚±‚Æ‚Æ‚·‚éB
+    if int(time.time()) - memberVCLog[member.id] < 600:
+        del memberVCLog[member.id]
+        
     createVCLogRequest = requests.post(
         f'{base_url}/vc_log',
         data = json.dumps({
