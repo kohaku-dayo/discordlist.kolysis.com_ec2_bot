@@ -9,15 +9,17 @@ memberVCLog:dict = {}
 
 async def on_vc_join(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
     create_tmp_vc_log(member)
-    await incrementCurrentActiveUsers(member)
+    await updateCurrentActiveUsers(member)
+#    await incrementCurrentActiveUsers(member)
 
 async def on_vc_change(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
     await post_vc_log(member)
     create_tmp_vc_log(member)
 
 async def on_vc_leave(member:discord.Member, before:discord.VoiceState, after:discord.VoiceState):
+    await updateCurrentActiveUsers(member)
     await post_vc_log(member)
-    await decrementCurrentActiveUsers(member)
+#    await decrementCurrentActiveUsers(member)
 
 def create_tmp_vc_log(member: discord.Member):
     global memberVCLog
@@ -63,3 +65,22 @@ async def decrementCurrentActiveUsers(member: discord.Member):
         "decrement current active users succeed",
         "decrement current active users failed"
         )
+    
+async def updateCurrentActiveUsers(member: discord.Member):
+    
+    vcMemberCounts = 0
+    for member in member.guild.members:
+        if member.voice is not None:
+            vcMemberCounts += 1
+
+    updateServerCurrentActiveUsersResponse = requests.patch(
+        f'{base_url}/server/{member.guild.id}/current_active_users',
+        data = json.dumps({"user_num": f'{vcMemberCounts}'})
+        )
+
+    await exception_process(
+        updateServerCurrentActiveUsersResponse,
+        "update server current active users number process successed.",
+        "update server current active users number failed."
+        )
+    
