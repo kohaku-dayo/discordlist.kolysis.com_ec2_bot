@@ -27,10 +27,28 @@ async def update_server_order(inter:discord.Interaction):
     try:
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
-        await inter.followup.send(e.response.text)
+        remainSec = int(e.response.text)
+        remainHour = remainSec // 60 // 60
+        remainMin = remainSec // 60 % 60
+        remainSec = remainSec % 60
+        remainSecText = ""
+        if remainHour > 0:
+            remainSecText = f'{remainHour}h '
+        else:
+            remainSecText = '0h '
+
+        if remainMin > 0:
+            remainSecText = f'{remainMin}m '
+        else:
+            remainSecText = '0m '
+            
+        if remainSec > 0:
+            remainSecText = f'{remainSec}s'
+        else:
+            remainSecText = f'0s'
+
+        await inter.followup.send(remainSecText)
         return
-    else:
-        await inter.followup.send("表示順の更新完了！")
 
     vcMemberCounts = 0
     for member in inter.guild.members:
@@ -42,6 +60,7 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"user_num": f'{vcMemberCounts}'})
         )
 
+    await inter.followup.send("表示順の更新完了！")
     
 async def create_server_invite(inter:discord.Interaction):
     await inter.response.defer()
