@@ -24,6 +24,16 @@ async def update_server_order(inter:discord.Interaction):
         "update server order process failed."
         )
 
+    try:
+        updateServerOrderResponse.raise_for_status()
+    except Exception as e:
+        await inter.followup.send(e.response)
+        await inter.followup.send(updateServerOrderResponse.status_code)
+        return
+    else:
+        await inter.followup.send("表示順の更新完了！")
+        await inter.followup.send(updateServerOrderResponse.status_code)
+
     vcMemberCounts = 0
     for member in inter.guild.members:
         if member.voice is not None:
@@ -34,14 +44,6 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"user_num": f'{vcMemberCounts}'})
         )
 
-    try:
-        updateServerCurrentActiveUsersResponse.raise_for_status()
-    except Exception as e:
-        await inter.followup.send(e.response)
-        await inter.followup.send(updateServerCurrentActiveUsersResponse.status_code)
-    else:
-        await inter.followup.send("表示順の更新完了！")
-        await inter.followup.send(updateServerCurrentActiveUsersResponse.status_code)
     
 async def create_server_invite(inter:discord.Interaction):
     await inter.response.defer()
