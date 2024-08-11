@@ -27,7 +27,7 @@ async def update_server_order(inter:discord.Interaction):
     try:
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
-        await inter.followup.send(updateServerOrderResponse.json())
+        await inter.followup.send(updateServerOrderResponse.json()['remain_epoch'])
         return
         remainSecResult = int(e.response.text)
         remainHour = remainSecResult / 3600
