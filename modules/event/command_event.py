@@ -27,12 +27,10 @@ async def update_server_order(inter:discord.Interaction):
     try:
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
-        await inter.followup.send(e.response)
-        await inter.followup.send(updateServerOrderResponse.status_code)
+        await inter.followup.send(e.response.text)
         return
     else:
         await inter.followup.send("表示順の更新完了！")
-        await inter.followup.send(updateServerOrderResponse.status_code)
 
     vcMemberCounts = 0
     for member in inter.guild.members:
