@@ -18,6 +18,12 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"updated_epoch": f'{int(time.time())}'})
         )
 
+    await exception_process(
+        updateServerOrderResponse,
+        "update server order process successed.",
+        "update server order process failed."
+        )
+
     try:
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
@@ -39,6 +45,12 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"user_num": f'{vcMemberCounts}'})
         )
 
+    await exception_process(
+        updateServerCurrentActiveUsersResponse,
+        "update server current active users number process successed.",
+        "update server current active users number failed."
+        )
+    
     await inter.followup.send("表示順の更新完了！")
     
 async def create_server_invite(inter:discord.Interaction):
