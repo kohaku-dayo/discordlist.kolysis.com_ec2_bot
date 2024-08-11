@@ -38,10 +38,10 @@ async def update_server_order(inter:discord.Interaction):
         updateServerCurrentActiveUsersResponse.raise_for_status()
     except Exception as e:
         await inter.followup.send(e.response)
-        return
-
-    
-    await inter.followup.send("表示順の更新完了！")
+        await inter.followup.send(updateServerCurrentActiveUsersResponse.status_code)
+    else:
+        await inter.followup.send("表示順の更新完了！")
+        await inter.followup.send(updateServerCurrentActiveUsersResponse.status_code)
     
 async def create_server_invite(inter:discord.Interaction):
     await inter.response.defer()
