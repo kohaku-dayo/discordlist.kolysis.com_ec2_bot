@@ -32,7 +32,7 @@ async def update_server_order(inter:discord.Interaction):
         remainSec = remainSecResult % 3600
         remainMin = remainSec // 60
         remainSec = remainSec % 60
-        await inter.followup.send(f'残り{remainHour}時間{remainMin}分{remainSec}秒で再度upできるようになります！')
+        await inter.followup.send(f'残り{int(remainHour)}時間{int(remainMin)}分{int(remainSec)}秒で再度upできるようになります！')
         return
 
     vcMemberCounts = 0
