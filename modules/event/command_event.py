@@ -22,26 +22,11 @@ async def update_server_order(inter:discord.Interaction):
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
         remainSecResult = int(e.response.text)
-        remainHour = remainSecResult // 60 // 60
-        remainMin = remainSecResult // 60 % 60
-        remainSec = remainSecResult % 60
-        remainSecText = ""
-        if remainHour > 0:
-            remainSecText += f'{remainHour}h '
-        else:
-            remainSecText += '0h '
-
-        if remainMin > 0:
-            remainSecText += f'{remainMin}m '
-        else:
-            remainSecText += '0m '
-            
-        if remainSec > 0:
-            remainSecText += f'{remainSec}s'
-        else:
-            remainSecText += f'0s'
-
-        await inter.followup.send(remainSecText)
+        remainHour = remainSecResult / 3600
+        remainSec = remainSecResult % 3600
+        remainMin = remainSec // 60
+        remainSec = remainSec % 60
+        await inter.followup.send(f'残り{remainHour}時間{remainMin}分{remainSec}秒で再度upできるようになります！')
         return
 
     vcMemberCounts = 0
