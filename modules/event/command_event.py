@@ -28,6 +28,8 @@ async def update_server_order(inter:discord.Interaction):
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
         remainSecResult = int(e.response.text)
+        await inter.followup.send(e.response.text)
+        return
         remainHour = remainSecResult / 3600
         remainSec = remainSecResult % 3600
         remainMin = remainSec // 60
