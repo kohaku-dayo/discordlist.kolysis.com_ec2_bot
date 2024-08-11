@@ -34,11 +34,12 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"user_num": f'{vcMemberCounts}'})
         )
 
-    await exception_process(
-        updateServerCurrentActiveUsersResponse,
-        "update server current active users number process successed.",
-        "update server current active users number failed."
-        )
+    try:
+        updateServerCurrentActiveUsersResponse.raise_for_status()
+    except Exception as e:
+        await inter.followup.send(e.response)
+        return
+
     
     await inter.followup.send("表示順の更新完了！")
     
