@@ -18,34 +18,28 @@ async def update_server_order(inter:discord.Interaction):
         data = json.dumps({"updated_epoch": f'{int(time.time())}'})
         )
 
-    await exception_process(
-        updateServerOrderResponse,
-        "update server order process successed.",
-        "update server order process failed."
-        )
-
     try:
         updateServerOrderResponse.raise_for_status()
     except Exception as e:
-        remainSec = int(e.response.text)
-        remainHour = remainSec // 60 // 60
-        remainMin = remainSec // 60 % 60
-        remainSec = remainSec % 60
+        remainSecResult = int(e.response.text)
+        remainHour = remainSecResult // 60 // 60
+        remainMin = remainSecResult // 60 % 60
+        remainSec = remainSecResult % 60
         remainSecText = ""
         if remainHour > 0:
-            remainSecText = f'{remainHour}h '
+            remainSecText += f'{remainHour}h '
         else:
-            remainSecText = '0h '
+            remainSecText += '0h '
 
         if remainMin > 0:
-            remainSecText = f'{remainMin}m '
+            remainSecText += f'{remainMin}m '
         else:
-            remainSecText = '0m '
+            remainSecText += '0m '
             
         if remainSec > 0:
-            remainSecText = f'{remainSec}s'
+            remainSecText += f'{remainSec}s'
         else:
-            remainSecText = f'0s'
+            remainSecText += f'0s'
 
         await inter.followup.send(remainSecText)
         return
