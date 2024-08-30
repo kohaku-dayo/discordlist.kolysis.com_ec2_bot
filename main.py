@@ -44,13 +44,13 @@ async def on_guild_update(before:discord.Guild, after:discord.Guild):
     if before.name != after.name:
         await update_server_name(after)
 
-@tree.command(name="help", description="サーバー表示順を更新します")
-@app_commands.default_permissions(administrator=True)
-async def up(inter:discord.Interaction):
-    await send_help(inter)    
+
+#@tree.command(name="help", description="サーバー表示順を更新します")
+#@app_commands.default_permissions(administrator=True)
+#async def up(inter:discord.Interaction):
+#    await send_help(inter)    
 
 @tree.command(name="up", description="サーバー表示順を更新します")
-@app_commands.default_permissions(administrator=True)
 async def up(inter:discord.Interaction):
     await update_server_order(inter)
 
